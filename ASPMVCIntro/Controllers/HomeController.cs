@@ -1,4 +1,5 @@
-﻿using ASPMVCIntro.Models;
+﻿using ASPMVCIntro.Contracts;
+using ASPMVCIntro.Models;
 using Microsoft.AspNetCore.Mvc;
 using System.Diagnostics;
 
@@ -8,9 +9,15 @@ namespace ASPMVCIntro.Controllers
     {
         private readonly ILogger<HomeController> _logger;
 
-        public HomeController(ILogger<HomeController> logger)
+        private readonly ITestService testService;
+
+        public HomeController(
+            ILogger<HomeController> logger,
+            ITestService _testService)
         {
             _logger = logger;
+
+            testService = _testService;
         }
 
         public IActionResult Index()
@@ -22,7 +29,8 @@ namespace ASPMVCIntro.Controllers
         public IActionResult Test()
         {
             var model = new TestModel();
-            return View(model);
+
+            return View("TestNew", model);
         }
 
         [HttpPost]
@@ -32,6 +40,9 @@ namespace ASPMVCIntro.Controllers
             {
                 return View(model);
             }
+
+            string product = testService.GetProduct(model);
+
             return RedirectToAction(nameof(Index));
         }
 

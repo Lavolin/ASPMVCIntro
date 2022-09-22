@@ -1,5 +1,6 @@
 ﻿using Microsoft.AspNetCore.Identity.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore;
+using ASPMVCIntro.Models;
 
 namespace ASPMVCIntro.Data
 {
@@ -9,5 +10,6 @@ namespace ASPMVCIntro.Data
             : base(options)
         {
         }
+        public DbSet<ASPMVCIntro.Models.TestModel> TestModel { get; set; }
     }
 }
